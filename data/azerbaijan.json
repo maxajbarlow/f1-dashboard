@@ -1,0 +1,424 @@
+{
+  "event_name": "",
+  "location": "",
+  "year": "2025",
+  "version": "4",
+  "days": {
+    "2025-09-19": {
+      "day_name": "Friday",
+      "date": "2025-09-19",
+      "sessions": [
+        {
+          "start_time": "12:30",
+          "end_time": "13:30",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "First Practice Session",
+          "raw_row": [
+            "12:30",
+            "13:301",
+            "FORMULA1",
+            "TRACK",
+            "FIRSTPRACTICESESSION"
+          ]
+        },
+        {
+          "start_time": "14:00",
+          "end_time": "14:30",
+          "category": "Formula 2",
+          "location": "Track",
+          "activity": "Qualifying Session",
+          "raw_row": [
+            "14:00",
+            "14:30",
+            "FIAFORMULA2",
+            "TRACK",
+            "QUALIFYINGSESSION"
+          ]
+        },
+        {
+          "start_time": "16:00",
+          "end_time": "17:00",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "Second Practice Session",
+          "raw_row": [
+            "16:00",
+            "17:001",
+            "FORMULA1",
+            "TRACK",
+            "SECONDPRACTICESESSION"
+          ]
+        }
+      ],
+      "other_events": [
+        {
+          "start_time": "08:30",
+          "end_time": "",
+          "category": "",
+          "location": "",
+          "activity": "Team Curfew Ends",
+          "raw_row": [
+            "08:30",
+            "",
+            "TEAMCURFEWENDS",
+            "",
+            ""
+          ]
+        },
+        {
+          "start_time": "08:30",
+          "end_time": "08:40",
+          "category": "Fia",
+          "location": "Track",
+          "activity": "Medical Inspection",
+          "raw_row": [
+            "08:30",
+            "08:40",
+            "FIA",
+            "TRACK",
+            "MEDICALINSPECTION"
+          ]
+        },
+        {
+          "start_time": "08:40",
+          "end_time": "09:00",
+          "category": "Fia",
+          "location": "Track Inspection & Safety Car Test",
+          "activity": "",
+          "raw_row": [
+            "08:40",
+            "09:00",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION&SAFETYCARTEST"
+          ]
+        },
+        {
+          "start_time": "10:00",
+          "end_time": "10:45",
+          "category": "Formula 2",
+          "location": "Track",
+          "activity": "Practice Session",
+          "raw_row": [
+            "10:00",
+            "10:451",
+            "FIAFORMULA2",
+            "TRACK",
+            "PRACTICESESSION"
+          ]
+        },
+        {
+          "start_time": "12:05",
+          "end_time": "12:20",
+          "category": "Fia",
+          "location": "Track Inspection & F1 Stewards Familiarisation",
+          "activity": "",
+          "raw_row": [
+            "12:05",
+            "12:20",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION&F1STEWARDSFAMILIARISATION"
+          ]
+        },
+        {
+          "start_time": "15:40",
+          "end_time": "15:50",
+          "category": "Fia",
+          "location": "Track Inspection",
+          "activity": "",
+          "raw_row": [
+            "15:40",
+            "15:50",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION"
+          ]
+        },
+        {
+          "start_time": "17:20",
+          "end_time": "",
+          "category": "",
+          "location": "Track Open To F1 Pass Holders",
+          "activity": "",
+          "raw_row": [
+            "17:20",
+            "",
+            "TRACKOPENTOF1PASSHOLDERS",
+            "",
+            ""
+          ]
+        },
+        {
+          "start_time": "21:00",
+          "end_time": "",
+          "category": "",
+          "location": "",
+          "activity": "Team Curfew Starts",
+          "raw_row": [
+            "21:00",
+            "",
+            "TEAMCURFEWSTARTS",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    "2025-09-20": {
+      "day_name": "Saturday",
+      "date": "2025-09-20",
+      "sessions": [
+        {
+          "start_time": "12:30",
+          "end_time": "13:30",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "Third Practice Session",
+          "raw_row": [
+            "12:30",
+            "13:301",
+            "FORMULA1",
+            "TRACK",
+            "THIRDPRACTICESESSION"
+          ]
+        },
+        {
+          "start_time": "14:15",
+          "end_time": "15:05",
+          "category": "Formula 2",
+          "location": "Track",
+          "activity": "Sprint Race(21 Laps Or 45 Mins + 1 Lap)",
+          "raw_row": [
+            "14:15*",
+            "15:052",
+            "FIAFORMULA2",
+            "TRACK",
+            "SPRINTRACE(21LAPSOR45MINS+1LAP)"
+          ]
+        },
+        {
+          "start_time": "16:00",
+          "end_time": "17:00",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "Qualifying Session",
+          "raw_row": [
+            "16:00",
+            "17:00",
+            "FORMULA1",
+            "TRACK",
+            "QUALIFYINGSESSION"
+          ]
+        }
+      ],
+      "other_events": [
+        {
+          "start_time": "09:30",
+          "end_time": "",
+          "category": "",
+          "location": "",
+          "activity": "Team Curfew Ends",
+          "raw_row": [
+            "09:30",
+            "",
+            "TEAMCURFEWENDS",
+            "",
+            ""
+          ]
+        },
+        {
+          "start_time": "11:40",
+          "end_time": "11:50",
+          "category": "Fia",
+          "location": "Track",
+          "activity": "Medical Inspection",
+          "raw_row": [
+            "11:40",
+            "11:50",
+            "FIA",
+            "TRACK",
+            "MEDICALINSPECTION"
+          ]
+        },
+        {
+          "start_time": "11:50",
+          "end_time": "12:05",
+          "category": "Fia",
+          "location": "Track Inspection & Safety Car Test",
+          "activity": "",
+          "raw_row": [
+            "11:50",
+            "12:05",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION&SAFETYCARTEST"
+          ]
+        },
+        {
+          "start_time": "14:00",
+          "end_time": "14:05",
+          "category": "Formula 2",
+          "location": "Pit Lane Open",
+          "activity": "",
+          "raw_row": [
+            "14:00",
+            "14:05",
+            "FIAFORMULA2",
+            "PITLANE",
+            "PITLANEOPEN"
+          ]
+        },
+        {
+          "start_time": "15:30",
+          "end_time": "15:40",
+          "category": "Fia",
+          "location": "Track Inspection",
+          "activity": "",
+          "raw_row": [
+            "15:30",
+            "15:40",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION"
+          ]
+        },
+        {
+          "start_time": "17:20",
+          "end_time": "",
+          "category": "",
+          "location": "Track Open To F1 Pass Holders",
+          "activity": "",
+          "raw_row": [
+            "17:20",
+            "",
+            "TRACKOPENTOF1PASSHOLDERS",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    "2025-09-21": {
+      "day_name": "Sunday",
+      "date": "2025-09-21",
+      "sessions": [
+        {
+          "start_time": "15:00",
+          "end_time": "17:00",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "Grand Prix(51 Laps Or 120 Mins)",
+          "raw_row": [
+            "15:00*",
+            "17:002",
+            "FORMULA1",
+            "TRACK",
+            "GRANDPRIX(51LAPSOR120MINS)"
+          ]
+        }
+      ],
+      "other_events": [
+        {
+          "start_time": "09:55",
+          "end_time": "10:05",
+          "category": "Fia",
+          "location": "Track",
+          "activity": "Medical Inspection",
+          "raw_row": [
+            "09:55",
+            "10:05",
+            "FIA",
+            "TRACK",
+            "MEDICALINSPECTION"
+          ]
+        },
+        {
+          "start_time": "10:05",
+          "end_time": "10:25",
+          "category": "Fia",
+          "location": "Track Inspection & Safety Car Test",
+          "activity": "",
+          "raw_row": [
+            "10:05",
+            "10:25",
+            "FIA",
+            "TRACK",
+            "TRACKINSPECTION&SAFETYCARTEST"
+          ]
+        },
+        {
+          "start_time": "10:45",
+          "end_time": "10:50",
+          "category": "Formula 2",
+          "location": "Pit Lane Open",
+          "activity": "",
+          "raw_row": [
+            "10:45",
+            "10:50",
+            "FIAFORMULA2",
+            "PITLANE",
+            "PITLANEOPEN"
+          ]
+        },
+        {
+          "start_time": "11:00",
+          "end_time": "12:05",
+          "category": "Formula 2",
+          "location": "Track",
+          "activity": "Feature Race(29 Laps Or 60 Mins + 1 Lap)",
+          "raw_row": [
+            "11:00*",
+            "12:052",
+            "FIAFORMULA2",
+            "TRACK",
+            "FEATURERACE(29LAPSOR60MINS+1LAP)"
+          ]
+        },
+        {
+          "start_time": "13:50",
+          "end_time": "14:10",
+          "category": "Fia",
+          "location": "Track & Medical Inspection",
+          "activity": "",
+          "raw_row": [
+            "13:50",
+            "14:10",
+            "FIA",
+            "TRACK",
+            "TRACK&MEDICALINSPECTION"
+          ]
+        },
+        {
+          "start_time": "14:20",
+          "end_time": "14:30",
+          "category": "Formula 1",
+          "location": "Pit Lane Open",
+          "activity": "",
+          "raw_row": [
+            "14:20",
+            "14:30",
+            "FORMULA1",
+            "PITLANE",
+            "PITLANEOPEN"
+          ]
+        },
+        {
+          "start_time": "14:44",
+          "end_time": "14:46",
+          "category": "Formula 1",
+          "location": "Track",
+          "activity": "National Anthem",
+          "raw_row": [
+            "14:44",
+            "14:46",
+            "FORMULA1",
+            "TRACK",
+            "NATIONALANTHEM"
+          ]
+        }
+      ]
+    }
+  }
+}

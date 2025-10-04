@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Weekend Countdown</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Cache Buster: 1728031400 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0f1419;
+            color: #e6e6e6;
+            height: 100vh;
+            overflow: hidden;
+            padding: 10px;
+            line-height: 1.3;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 100vw;
+            margin: 0 auto;
+            height: calc(100vh - 20px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Burger Menu */
+        .burger-menu {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: #1a1f2e;
+            border: 1px solid #e10600;
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger-menu span {
+            width: 20px;
+            height: 2px;
+            background: #e10600;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .burger-menu:hover {
+            background: #e10600;
+        }
+
+        .burger-menu:hover span {
+            background: white;
+        }
+
+        /* Compact Header */
+        header {
+            text-align: center;
+            padding: 2px 0 3px;
+            flex-shrink: 0;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e10600;
+            margin-bottom: 2px;
+            letter-spacing: 0.2px;
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+            color: #999;
+            font-weight: 400;
+        }
+
+        /* Main Dashboard Layout - Three Rows */
+        .dashboard-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-height: 0;
+            height: 100%;
+        }
+
+        /* Sessions Row - Top */
+        .sessions-row {
+            flex: 2;
+            min-height: 200px;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Main Countdown - Left Side of Sessions Row */
+        .main-countdown-section {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .main-countdown-card {
+            background: #1f2430;
+            border: 2px solid #e10600;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(225, 6, 0, 0.2);
+            height: 100%;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .main-session-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .main-session-race {
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .main-session-activity {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e10600;
+            line-height: 1.3;
+        }
+
+        .main-session-time-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .main-session-time {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e10600;
+        }
+
+        .main-session-end-time {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .main-countdown {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .main-countdown-unit {
+            text-align: center;
+            min-width: 45px;
+        }
+
+        .main-countdown-number {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #e10600;
+            line-height: 1;
+        }
+
+        .main-countdown-label {
+            display: block;
+            font-size: 0.65rem;
+            color: #999;
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Grid Section - Right Side */
+        /* Sessions Section - Right Side of Sessions Row */
+        .sessions-section {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            height: 100%;
+        }
+
+        /* Schedule Rows - Bottom */
+        .schedule-row {
+            flex: 1;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e10600;
+            margin-bottom: 3px;
+            flex-shrink: 0;
+        }
+
+        /* Compact Sessions Layout */
+        .sessions-container {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            min-height: 0;
+            height: 100%;
+        }
+
+        #sessionsGrid {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 12px !important;
+            padding: 10px 0 !important;
+            min-width: max-content !important;
+            height: 100%;
+        }
+
+
+        #sessionsGrid .session-card {
+            min-width: 200px !important;
+            max-width: 200px !important;
+            height: 130px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            flex-shrink: 0 !important;
+            padding: 12px !important;
+        }
+
+        /* Filters Panel - Optimized */
+        .filters-panel {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: #0f1419;
+            border-left: 2px solid #e10600;
+            z-index: 999;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 60px 15px 15px 15px;
+        }
+
+        .filters-panel.show {
+            right: 0;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2a3040;
+        }
+
+        .filters-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e10600;
+        }
+
+        .toggle-filters {
+            background: #1a1f2e;
+            border: 1px solid #e10600;
+            color: #e10600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .toggle-filters:hover {
+            background: #e10600;
+            color: white;
+        }
+
+        .filters-content {
+            margin-bottom: 15px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid #2a3040;
+        }
+
+        .filter-btn {
+            flex: 1;
+            background: #1a1f2e;
+            border: 1px solid #2a3040;
+            color: #e6e6e6;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: #e10600;
+            border-color: #e10600;
+        }
+
+        /* Filter Series Styles */
+        .filter-series {
+            margin-bottom: 12px;
+        }
+
+        .filter-series-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: #1a1f2e;
+            border: 1px solid #2a3040;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-series-header:hover {
+            background: #2a3040;
+        }
+
+        .filter-series-name {
+            font-weight: 600;
+            color: #e6e6e6;
+            font-size: 0.85rem;
+        }
+
+        .filter-series-toggle {
+            color: #e10600;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .filter-series-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .filter-series-content.expanded {
+            max-height: 400px;
+            padding: 8px 0;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .filter-item:hover {
+            background: #1a1f2e;
+        }
+
+        .filter-checkbox {
+            margin-right: 8px;
+        }
+
+        .filter-label {
+            color: #e6e6e6;
+            font-size: 0.8rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Default styles for day groups and cards */
+        .day-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .day-header {
+            padding: 12px 0 8px;
+            border-bottom: 2px solid #2a3040;
+            margin-bottom: 6px;
+        }
+
+        .day-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e10600;
+            margin-bottom: 3px;
+        }
+
+        .day-date {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 400;
+        }
+
+        .session-card {
+            background: #1a1f2e;
+            border: 1px solid #2a3040;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: slideInStack 0.4s ease forwards;
+        }
+
+        @keyframes slideInStack {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .session-card:hover {
+            border-color: #e10600;
+            background: #1f2430;
+            transform: translateY(-1px);
+        }
+
+        .session-race {
+            font-size: 0.7rem;
+            color: #999;
+            margin-bottom: 3px;
+            font-weight: 500;
+        }
+
+        .session-activity {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #e6e6e6;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .session-time {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e10600;
+            margin-bottom: 6px;
+        }
+
+        .session-status {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 6px;
+        }
+
+        .countdown-unit {
+            text-align: center;
+            min-width: 30px;
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e10600;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            display: block;
+            font-size: 0.55rem;
+            color: #999;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sessions-row {
+                flex-direction: column;
+                height: auto;
+                flex: 0 0 auto;
+            }
+
+            .main-countdown-section {
+                flex: 0 0 auto;
+            }
+
+            .main-countdown-card {
+                height: 140px;
+            }
+
+            .sessions-section {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+
+            .schedule-row {
+                height: 160px;
+                flex: 0 0 160px;
+            }
+
+            .day-schedule {
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                height: calc(100vh - 20px);
+                gap: 10px;
+            }
+
+            .dashboard-content {
+                gap: 10px;
+            }
+
+            .main-countdown-section {
+                flex: 0 0 auto;
+            }
+
+            .main-countdown-card {
+                height: 140px;
+                padding: 15px;
+            }
+
+            #sessionsGrid .session-card {
+                min-width: 180px !important;
+                max-width: 180px !important;
+                height: 120px !important;
+                padding: 12px !important;
+            }
+
+            #sessionsGrid {
+                gap: 10px !important;
+            }
+        }
+
+        /* Horizontal Schedule Sections */
+        .schedule-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 5px 0;
+            flex: 1;
+            min-height: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .schedule-grid {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 12px !important;
+            min-width: max-content !important;
+            height: 100%;
+        }
+
+        .day-schedule {
+            background: #1a1f2e;
+            border: 1px solid #2a3040;
+            border-radius: 6px;
+            padding: 8px;
+            min-width: 140px;
+            max-width: 140px;
+            min-height: 120px;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .day-schedule:hover {
+            border-color: #e10600;
+            background: #1f2430;
+        }
+
+        .day-schedule-header {
+            text-align: center;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #2a3040;
+        }
+
+        .day-name-schedule {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #e10600;
+            margin-bottom: 2px;
+        }
+
+        .day-date-schedule {
+            font-size: 0.65rem;
+            color: #999;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            border-bottom: 1px solid #2a3040;
+            margin-bottom: 3px;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .schedule-label {
+            font-size: 0.7rem;
+            color: #e6e6e6;
+            font-weight: 500;
+        }
+
+        .schedule-time {
+            font-size: 0.7rem;
+            color: #e10600;
+            font-weight: 600;
+        }
+
+        .hotel-leave-time {
+            text-align: center;
+            padding: 6px;
+            background: #2a3040;
+            border-radius: 4px;
+            margin-top: 3px;
+        }
+
+        .hotel-leave-label {
+            font-size: 0.65rem;
+            color: #999;
+            margin-bottom: 2px;
+        }
+
+        .hotel-leave-value {
+            font-size: 0.85rem;
+            color: #e10600;
+            font-weight: 600;
+        }
+
+        /* Custom Scrollbars */
+        .sessions-container::-webkit-scrollbar,
+        #sessionsGrid::-webkit-scrollbar,
+        .schedule-container::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+
+        .sessions-container::-webkit-scrollbar-track,
+        #sessionsGrid::-webkit-scrollbar-track,
+        .schedule-container::-webkit-scrollbar-track {
+            background: #1a1f2e;
+            border-radius: 3px;
+        }
+
+        .sessions-container::-webkit-scrollbar-thumb,
+        #sessionsGrid::-webkit-scrollbar-thumb,
+        .schedule-container::-webkit-scrollbar-thumb {
+            background: #e10600;
+            border-radius: 3px;
+        }
+
+        .sessions-container::-webkit-scrollbar-thumb:hover,
+        #sessionsGrid::-webkit-scrollbar-thumb:hover,
+        .schedule-container::-webkit-scrollbar-thumb:hover {
+            background: #ff0800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Burger Menu Button -->
+        <button class="burger-menu" id="burgerMenu" onclick="toggleFilters()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <header>
+            <h1>F1 Weekend Countdown</h1>
+            <p class="subtitle">Live countdown to upcoming Formula 1 sessions | <a href="/config" style="color: #e10600; text-decoration: none;">⚙️ Configure</a> | <a href="/git" style="color: #e10600; text-decoration: none;">🔧 Git</a></p>
+        </header>
+
+        <div id="loading" class="loading">
+            Loading F1 schedule...
+        </div>
+
+        <div id="filtersPanel" class="filters-panel">
+            <div class="filters-header">
+                <div class="filters-title">🏁 Event Filters</div>
+                <button class="toggle-filters" onclick="toggleFilters()">Hide</button>
+            </div>
+            <div class="filters-content" id="filtersContent"></div>
+            <div class="filter-actions">
+                <button class="filter-btn" onclick="selectAllFilters()">Select All</button>
+                <button class="filter-btn" onclick="deselectAllFilters()">Deselect All</button>
+            </div>
+        </div>
+
+        <div class="dashboard-content" id="dashboardContent" style="display: none;">
+            <!-- Top Row: Sessions -->
+            <div class="sessions-row">
+                <!-- Main Countdown - Left Side -->
+                <div class="main-countdown-section">
+                    <div id="mainCountdown"></div>
+                </div>
+
+                <!-- Sessions Grid - Right Side -->
+                <div class="sessions-section">
+                    <div id="upcomingSessions">
+                        <h2 class="section-title">Upcoming Sessions</h2>
+                        <div class="sessions-container">
+                            <div class="sessions-grid" id="sessionsGrid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Row: Meal Times -->
+            <div class="schedule-row" id="mealTimes">
+                <h2 class="section-title">Meal Times</h2>
+                <div class="schedule-container">
+                    <div class="schedule-grid" id="mealTimesGrid"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Hotel Leave Times -->
+            <div class="schedule-row" id="hotelLeaveTimes">
+                <h2 class="section-title">Hotel Leave Times</h2>
+                <div class="schedule-container">
+                    <div class="schedule-grid" id="hotelLeaveGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allSessions = [];
+        let activeSubcategories = new Set();
+        let subcategoryCounts = {};
+        let expandedSeries = new Set();
+        let serverCurrentTime = null;
+
+        // Cookie utility functions
+        function setCookie(name, value, days = 30) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) {
+                    return decodeURIComponent(c.substring(nameEQ.length, c.length));
+                }
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+        }
+
+        function loadFiltersFromCookies() {
+            // Try to load from cookies first
+            const savedSubcategories = getCookie('f1SubcategoryFilters');
+
+            if (savedSubcategories) {
+                try {
+                    const parsed = JSON.parse(savedSubcategories);
+                    if (Array.isArray(parsed)) {
+                        activeSubcategories = new Set(parsed);
+                    }
+                } catch (e) {
+                    console.log('Error parsing saved subcategory filters:', e);
+                }
+            }
+
+            // Try to load expanded series from cookies
+            const savedExpandedSeries = getCookie('f1ExpandedSeries');
+            if (savedExpandedSeries) {
+                try {
+                    const parsed = JSON.parse(savedExpandedSeries);
+                    if (Array.isArray(parsed)) {
+                        expandedSeries = new Set(parsed);
+                    }
+                } catch (e) {
+                    console.log('Error parsing saved expanded series:', e);
+                }
+            }
+        }
+
+        function saveFiltersToCookies() {
+            // Save subcategory filters to cookies
+            setCookie('f1SubcategoryFilters', JSON.stringify([...activeSubcategories]));
+
+            // Save expanded series to cookies
+            setCookie('f1ExpandedSeries', JSON.stringify([...expandedSeries]));
+        }
+
+        function toggleFilters() {
+            const panel = document.getElementById("filtersPanel");
+            const burger = document.getElementById("burgerMenu");
+
+            if (panel.classList.contains("show")) {
+                panel.classList.remove("show");
+                burger.style.transform = "rotate(0deg)";
+            } else {
+                panel.classList.add("show");
+                panel.style.display = "block";
+                burger.style.transform = "rotate(90deg)";
+            }
+        }
+
+        function selectAllFilters() {
+            const subcategoryElements = document.querySelectorAll('.filter-checkbox');
+            subcategoryElements.forEach(checkbox => {
+                checkbox.checked = true;
+                activeSubcategories.add(checkbox.value);
+            });
+            saveFiltersToCookies();
+            applyFilters();
+        }
+
+        function deselectAllFilters() {
+            const subcategoryElements = document.querySelectorAll('.filter-checkbox');
+            subcategoryElements.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            activeSubcategories.clear();
+            saveFiltersToCookies();
+            applyFilters();
+        }
+
+        function applyFilters() {
+            renderSessionsGrid();
+        }
+
+        function isSessionCurrentlyActive(session) {
+            // Check if session is currently ongoing (started but not ended)
+            if (!session.end_timestamp) return false;
+
+            const currentTime = Date.now();
+            const sessionStart = session.timestamp * 1000; // Convert to milliseconds
+            const sessionEnd = session.end_timestamp * 1000; // Convert to milliseconds
+
+            return currentTime >= sessionStart && currentTime <= sessionEnd;
+        }
+
+        function createCountdown(targetDate, endDate = null, isMainCountdown = false) {
+            // Always use browser local time for accurate countdown
+            const currentTime = Date.now();
+
+            // Parse target date and ensure it's in milliseconds
+            const target = new Date(targetDate).getTime();
+            const distance = target - currentTime;
+
+            console.log('Countdown calculation:', {
+                targetDate: targetDate,
+                target: target,
+                currentTime: currentTime,
+                distance: distance,
+                serverTime: serverCurrentTime ? new Date(serverCurrentTime).toISOString() : 'Not available'
+            });
+
+            if (distance < 0) {
+                // If this is the main countdown and we have an end time, check if session is ongoing
+                if (isMainCountdown && endDate) {
+                    const endTime = new Date(endDate).getTime();
+                    const endDistance = endTime - currentTime;
+
+                    if (endDistance > 0) {
+                        // Session is currently ongoing - show countdown to end
+                        const days = Math.floor(endDistance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((endDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((endDistance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((endDistance % (1000 * 60)) / 1000);
+
+                        const unitClass = isMainCountdown ? 'main-countdown-unit' : 'countdown-unit';
+                        const numberClass = isMainCountdown ? 'main-countdown-number' : 'countdown-number';
+                        const labelClass = isMainCountdown ? 'main-countdown-label' : 'countdown-label';
+                        const containerClass = isMainCountdown ? 'main-countdown' : 'countdown';
+
+                        return `
+                            <div class="${containerClass}">
+                                <div class="${unitClass}">
+                                    <span class="${numberClass}">${days}</span>
+                                    <span class="${labelClass}">Days</span>
+                                </div>
+                                <div class="${unitClass}">
+                                    <span class="${numberClass}">${hours.toString().padStart(2, '0')}</span>
+                                    <span class="${labelClass}">Hours</span>
+                                </div>
+                                <div class="${unitClass}">
+                                    <span class="${numberClass}">${minutes.toString().padStart(2, '0')}</span>
+                                    <span class="${labelClass}">Minutes</span>
+                                </div>
+                                <div class="${unitClass}">
+                                    <span class="${numberClass}">${seconds.toString().padStart(2, '0')}</span>
+                                    <span class="${labelClass}">Seconds</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+                return '<span class="session-status">Session has started or ended</span>';
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const unitClass = isMainCountdown ? 'main-countdown-unit' : 'countdown-unit';
+            const numberClass = isMainCountdown ? 'main-countdown-number' : 'countdown-number';
+            const labelClass = isMainCountdown ? 'main-countdown-label' : 'countdown-label';
+            const containerClass = isMainCountdown ? 'main-countdown' : 'countdown';
+
+            return `
+                <div class="${containerClass}">
+                    <div class="${unitClass}">
+                        <span class="${numberClass}">${days}</span>
+                        <span class="${labelClass}">Days</span>
+                    </div>
+                    <div class="${unitClass}">
+                        <span class="${numberClass}">${hours.toString().padStart(2, '0')}</span>
+                        <span class="${labelClass}">Hours</span>
+                    </div>
+                    <div class="${unitClass}">
+                        <span class="${numberClass}">${minutes.toString().padStart(2, '0')}</span>
+                        <span class="${labelClass}">Minutes</span>
+                    </div>
+                    <div class="${unitClass}">
+                        <span class="${numberClass}">${seconds.toString().padStart(2, '0')}</span>
+                        <span class="${labelClass}">Seconds</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateCountdowns() {
+            // Update all countdowns using browser time
+            document.querySelectorAll('[data-target-time]').forEach(element => {
+                const targetTime = element.getAttribute('data-target-time');
+                const endTime = element.getAttribute('data-end-time');
+                const isMainCountdown = element.classList.contains('main-countdown-card');
+
+                const countdownHtml = createCountdown(targetTime, endTime, isMainCountdown);
+                // Only update the countdown placeholder, not the whole card
+                const countdownPlaceholder = element.querySelector('.countdown-placeholder, .main-countdown-placeholder');
+                if (countdownPlaceholder) {
+                    countdownPlaceholder.innerHTML = countdownHtml;
+                }
+            });
+        }
+
+        function formatSessionTime(dateString) {
+            const date = new Date(dateString);
+
+            // Use browser local time
+            const now = new Date();
+
+            const isToday = date.toDateString() === now.toDateString();
+            const isTomorrow = date.toDateString() === new Date(now.getTime() + 24 * 60 * 60 * 1000).toDateString();
+
+            const timeString = date.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+
+            if (isToday) {
+                return `Today ${timeString}`;
+            } else if (isTomorrow) {
+                return `Tomorrow ${timeString}`;
+            } else {
+                return `${date.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                })} ${timeString}`;
+            }
+        }
+
+        function formatTimeOnly(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+        }
+
+        function renderSessionsGrid() {
+            const grid = document.getElementById('sessionsGrid');
+            if (!grid || allSessions.length === 0) {
+                console.log('Grid not found or no sessions');
+                return;
+            }
+
+            console.log('Total sessions:', allSessions.length);
+
+            // Get the next session that will be shown in main countdown (always first from allSessions)
+            const mainCountdownSession = allSessions[0];
+            console.log('Main countdown session:', mainCountdownSession);
+
+            // Temporarily bypass filter for debugging - show all sessions
+            let filteredSessions = allSessions;
+            console.log('Showing all sessions (filter bypassed for debugging):', filteredSessions.length);
+
+            let html = '';
+            let renderedCount = 0;
+
+            // Render all sessions in a simple horizontal row
+            filteredSessions.forEach((session, index) => {
+                // Skip the session that's already shown in main countdown
+                if (mainCountdownSession && session.datetime === mainCountdownSession.datetime &&
+                    session.category === mainCountdownSession.category &&
+                    session.activity === mainCountdownSession.activity) {
+                    console.log('Skipping main countdown session at index', index);
+                    return;
+                }
+
+                const sessionTime = formatSessionTime(session.datetime);
+
+                const displayCategory = session.category && session.category.trim() ? session.category : session.race;
+                let displayActivity;
+                if (session.activity && session.activity.trim()) {
+                    displayActivity = session.activity;
+                } else {
+                    // Infer session type from category and context
+                    const category = session.category && session.category.trim() ? session.category : '';
+
+                    if (category === 'Fia') {
+                        displayActivity = 'Track Inspection';
+                    } else if (category === 'Formula 1') {
+                        displayActivity = 'F1 Track Session';
+                    } else if (category === 'Formula 2') {
+                        displayActivity = 'F2 Session';
+                    } else if (category === 'Formula 3') {
+                        displayActivity = 'F3 Session';
+                    } else if (category === 'F1 Academy') {
+                        displayActivity = 'F1 Academy Session';
+                    } else if (category.includes('Porsche')) {
+                        displayActivity = 'Porsche Session';
+                    } else if (category) {
+                        displayActivity = `${category} Session`;
+                    } else {
+                        displayActivity = 'Track Session';
+                    }
+                }
+
+                html += `
+                    <div class="session-card" data-target-time="${session.datetime}">
+                        <div>
+                            <div class="session-race">${displayCategory}</div>
+                            <div class="session-activity">${displayActivity}</div>
+                            <div class="session-time">${sessionTime}</div>
+                        </div>
+                        <div class="countdown-placeholder">
+                            ${createCountdown(session.datetime)}
+                        </div>
+                    </div>
+                `;
+                renderedCount++;
+            });
+
+            console.log('Sessions rendered in grid:', renderedCount);
+            console.log('HTML length:', html.length);
+
+            grid.innerHTML = html;
+            updateMainCountdown();
+        }
+
+        function updateMainCountdown() {
+            const mainCountdown = document.getElementById('mainCountdown');
+            if (!mainCountdown || allSessions.length === 0) return;
+
+            // Always show the next upcoming session in main tile, regardless of filters
+            // Get the next session from all sessions (unfiltered)
+            const nextSession = allSessions[0];
+            if (!nextSession) {
+                mainCountdown.style.display = 'none';
+                return;
+            }
+
+            const sessionTime = formatSessionTime(nextSession.datetime);
+            const isCurrentlyActive = isSessionCurrentlyActive(nextSession);
+
+            const displayCategory = nextSession.category && nextSession.category.trim() ? nextSession.category : nextSession.race;
+            let displayActivity;
+            if (nextSession.activity && nextSession.activity.trim()) {
+                displayActivity = nextSession.activity;
+            } else {
+                // Infer session type from category and context
+                const category = nextSession.category && nextSession.category.trim() ? nextSession.category : '';
+
+                if (category === 'Fia') {
+                    displayActivity = 'Track Inspection';
+                } else if (category === 'Formula 1') {
+                    displayActivity = 'F1 Track Session';
+                } else if (category === 'Formula 2') {
+                    displayActivity = 'F2 Session';
+                } else if (category === 'Formula 3') {
+                    displayActivity = 'F3 Session';
+                } else if (category === 'F1 Academy') {
+                    displayActivity = 'F1 Academy Session';
+                } else if (category.includes('Porsche')) {
+                    displayActivity = 'Porsche Session';
+                } else if (category) {
+                    displayActivity = `${category} Session`;
+                } else {
+                    displayActivity = 'Track Session';
+                }
+            }
+
+            // Show end time only for currently active sessions
+            let endTimeHtml = '';
+            if (isCurrentlyActive && nextSession.end_time) {
+                endTimeHtml = `<div class="main-session-end-time">Ends at ${formatTimeOnly(nextSession.end_datetime)}</div>`;
+            }
+
+            mainCountdown.innerHTML = `
+                <div class="main-countdown-card" data-target-time="${nextSession.datetime}" data-end-time="${nextSession.end_datetime || ''}">
+                    <div class="main-session-info">
+                        <div class="main-session-race">${displayCategory}</div>
+                        <div class="main-session-activity">${displayActivity}</div>
+                        <div class="main-session-time-info">
+                            <div class="main-session-time">${sessionTime}</div>
+                            ${endTimeHtml}
+                        </div>
+                    </div>
+                    <div class="main-countdown-placeholder">
+                        ${createCountdown(nextSession.datetime, nextSession.end_datetime, true)}
+                    </div>
+                </div>
+            `;
+
+            mainCountdown.style.display = 'block';
+        }
+
+        function renderFilters() {
+            const filtersContent = document.getElementById('filtersContent');
+            if (!filtersContent) return;
+
+            // Group subcategories by series (first part before the dash)
+            const seriesGroups = {};
+            Object.keys(subcategoryCounts).forEach(subcategory => {
+                const parts = subcategory.split('-');
+                const series = parts[0] || 'Other';
+                if (!seriesGroups[series]) {
+                    seriesGroups[series] = [];
+                }
+                seriesGroups[series].push(subcategory);
+            });
+
+            let html = '';
+            Object.keys(seriesGroups).sort().forEach(series => {
+                const subcategories = seriesGroups[series].sort();
+                const isExpanded = expandedSeries.has(series);
+
+                html += `
+                    <div class="filter-series">
+                        <div class="filter-series-header" onclick="toggleSeries('${series}')">
+                            <span class="filter-series-name">${series}</span>
+                            <span class="filter-series-toggle">${isExpanded ? '−' : '+'}</span>
+                        </div>
+                        <div class="filter-series-content ${isExpanded ? 'expanded' : ''}">
+                `;
+
+                subcategories.forEach(subcategory => {
+                    const count = subcategoryCounts[subcategory];
+                    const isActive = activeSubcategories.has(subcategory);
+                    const displayName = subcategory.split('-').slice(1).join('-') || 'Main Event';
+
+                    html += `
+                        <div class="filter-item" onclick="toggleSubcategory('${subcategory}')">
+                            <input type="checkbox" class="filter-checkbox" value="${subcategory}" ${isActive ? 'checked' : ''} onclick="event.stopPropagation()">
+                            <span class="filter-label">${displayName} (${count})</span>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            filtersContent.innerHTML = html;
+        }
+
+        function toggleSeries(series) {
+            if (expandedSeries.has(series)) {
+                expandedSeries.delete(series);
+            } else {
+                expandedSeries.add(series);
+            }
+            saveFiltersToCookies();
+            renderFilters();
+        }
+
+        function toggleSubcategory(subcategory) {
+            const checkbox = document.querySelector(`input[value="${subcategory}"]`);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                if (checkbox.checked) {
+                    activeSubcategories.add(subcategory);
+                } else {
+                    activeSubcategories.delete(subcategory);
+                }
+                saveFiltersToCookies();
+                applyFilters();
+            }
+        }
+
+        async function loadSessions() {
+            try {
+                // Load configuration first
+                await loadConfig();
+
+                const response = await fetch('/api/sessions');
+                const data = await response.json();
+
+                allSessions = data.sessions || [];
+
+                // Calculate subcategory counts for filters
+                subcategoryCounts = {};
+                allSessions.forEach(session => {
+                    const subcategory = `${session.category || session.race}-${session.activity || "Session"}`;
+                    subcategoryCounts[subcategory] = (subcategoryCounts[subcategory] || 0) + 1;
+                });
+
+                // Load filter state from cookies
+                loadFiltersFromCookies();
+
+                // If no active filters, activate all by default
+                if (activeSubcategories.size === 0) {
+                    activeSubcategories = new Set(Object.keys(subcategoryCounts));
+                    saveFiltersToCookies();
+                }
+
+                // Render filters and sessions
+                renderFilters();
+                renderSessionsGrid();
+
+                // Render meal times and hotel leave times
+                renderMealTimes();
+                renderHotelLeaveTimes();
+
+                // Hide loading and show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboardContent').style.display = 'flex';
+
+                console.log(`Loaded ${allSessions.length} sessions`);
+
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+                document.getElementById('loading').innerHTML = 'Error loading F1 schedule. Please refresh the page.';
+            }
+        }
+
+        // Meal times and hotel leave times - loaded from config
+        let mealTimesData = {};
+        let hotelLeaveTimesData = {};
+
+        // Load configuration from API
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/config');
+                const config = await response.json();
+                mealTimesData = config.meal_times || {};
+                hotelLeaveTimesData = config.hotel_leave_times || {};
+                return true;
+            } catch (error) {
+                console.error('Error loading config:', error);
+                // Fallback to defaults
+                mealTimesData = {
+                    'Tuesday': { breakfast: '07:00', lunch: '12:30', dinner: '19:00' },
+                    'Wednesday': { breakfast: '07:00', lunch: '12:30', dinner: '19:00' },
+                    'Thursday': { breakfast: '07:00', lunch: '12:30', dinner: '19:00' },
+                    'Friday': { breakfast: '07:00', lunch: '12:30', dinner: '19:00' },
+                    'Saturday': { breakfast: '08:00', lunch: '13:00', dinner: '19:30' },
+                    'Sunday': { breakfast: '08:00', lunch: '13:00', dinner: '19:30' }
+                };
+                hotelLeaveTimesData = {
+                    'Tuesday': '08:30',
+                    'Wednesday': '08:30',
+                    'Thursday': '08:30',
+                    'Friday': '09:00',
+                    'Saturday': '10:00',
+                    'Sunday': '11:00'
+                };
+                return false;
+            }
+        }
+
+        function renderMealTimes() {
+            const grid = document.getElementById('mealTimesGrid');
+            if (!grid) return;
+
+            let html = '';
+
+            // Define day order: Tuesday to Sunday
+            const dayOrder = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+            dayOrder.forEach((dayName, index) => {
+                if (!mealTimesData[dayName]) return;
+                const meals = mealTimesData[dayName];
+
+                // Fixed week: Sept 30 (Tuesday) to Oct 5 (Sunday)
+                // Base date: Sept 30, 2025 (Tuesday)
+                const baseDate = new Date(2025, 8, 30); // Month is 0-indexed, so 8 = September
+                const dayDate = new Date(baseDate);
+                dayDate.setDate(baseDate.getDate() + index); // Add 0-5 days for Tue-Sun
+
+                html += `
+                    <div class="day-schedule">
+                        <div class="day-schedule-header">
+                            <div class="day-name-schedule">${dayName}</div>
+                            <div class="day-date-schedule">${dayDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="schedule-label">🍳 Breakfast</span>
+                            <span class="schedule-time">${meals.breakfast}</span>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="schedule-label">🍽️ Lunch</span>
+                            <span class="schedule-time">${meals.lunch}</span>
+                        </div>
+                        <div class="schedule-item">
+                            <span class="schedule-label">🍷 Dinner</span>
+                            <span class="schedule-time">${meals.dinner}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function renderHotelLeaveTimes() {
+            const grid = document.getElementById('hotelLeaveGrid');
+            if (!grid) return;
+
+            let html = '';
+
+            // Define day order: Tuesday to Sunday
+            const dayOrder = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+            dayOrder.forEach((dayName, index) => {
+                if (!hotelLeaveTimesData[dayName]) return;
+                const leaveTime = hotelLeaveTimesData[dayName];
+
+                // Fixed week: Sept 30 (Tuesday) to Oct 5 (Sunday)
+                // Base date: Sept 30, 2025 (Tuesday)
+                const baseDate = new Date(2025, 8, 30); // Month is 0-indexed, so 8 = September
+                const dayDate = new Date(baseDate);
+                dayDate.setDate(baseDate.getDate() + index); // Add 0-5 days for Tue-Sun
+
+                html += `
+                    <div class="day-schedule">
+                        <div class="day-schedule-header">
+                            <div class="day-name-schedule">${dayName}</div>
+                            <div class="day-date-schedule">${dayDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                        </div>
+                        <div class="hotel-leave-time">
+                            <div class="hotel-leave-label">🏨 Departure</div>
+                            <div class="hotel-leave-value">${leaveTime}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // Add horizontal scrolling with mouse wheel
+        function addHorizontalScrolling() {
+            const containers = document.querySelectorAll('.sessions-container, .schedule-container');
+
+            containers.forEach(container => {
+                container.addEventListener('wheel', function(e) {
+                    // Only scroll horizontally when hovering over the container
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        // Scroll horizontally instead of vertically
+                        container.scrollLeft += e.deltaY;
+                    }
+                });
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSessions();
+
+            // Add horizontal scrolling functionality
+            addHorizontalScrolling();
+
+            // Update countdowns every second
+            setInterval(updateCountdowns, 1000);
+        });
+    </script>
+</body>
+</html>

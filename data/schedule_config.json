@@ -1,0 +1,42 @@
+{
+  "meal_times": {
+    "Tuesday": {
+      "breakfast": "07:00",
+      "lunch": "12:30",
+      "dinner": "19:00"
+    },
+    "Wednesday": {
+      "breakfast": "07:00",
+      "lunch": "12:30",
+      "dinner": "19:00"
+    },
+    "Thursday": {
+      "breakfast": "07:00",
+      "lunch": "12:30",
+      "dinner": "19:00"
+    },
+    "Friday": {
+      "breakfast": "07:00",
+      "lunch": "12:30",
+      "dinner": "19:00"
+    },
+    "Saturday": {
+      "breakfast": "08:00",
+      "lunch": "13:00",
+      "dinner": "19:30"
+    },
+    "Sunday": {
+      "breakfast": "08:00",
+      "lunch": "13:00",
+      "dinner": "19:30"
+    }
+  },
+  "hotel_leave_times": {
+    "Tuesday": "08:30",
+    "Wednesday": "08:30",
+    "Thursday": "08:30",
+    "Friday": "09:00",
+    "Saturday": "10:00",
+    "Sunday": "11:00"
+  }
+}
